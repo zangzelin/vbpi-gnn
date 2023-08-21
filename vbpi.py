@@ -20,6 +20,7 @@ class VBPI(nn.Module):
     def __init__(self, taxa, rootsplit_supp_dict, subsplit_supp_dict, data, pden, subModel, emp_tree_freq=None,
                  scale=0.1, psp=True, feature_dim=2, hidden_dim=100, num_layers=1, branch_model='base', gnn_type='gcn', aggr='sum', project=False):
         super().__init__()
+        import pdb; pdb.set_trace()
         self.taxa, self.emp_tree_freq = taxa, emp_tree_freq
         if emp_tree_freq:
             self.trees, self.emp_freqs = zip(*emp_tree_freq.items())

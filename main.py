@@ -99,8 +99,26 @@ else:
 rootsplit_supp_dict, subsplit_supp_dict = get_support_from_mcmc(taxa, tree_dict_support, tree_names_support)
 del tree_dict_support, tree_names_support
 import pdb; pdb.set_trace()
+
+
+# taxa = ['Alligator_mississippiensis', 'Ambystoma_mexicanum', 'Amphiuma_tridactylum', 'Bufo_valliceps', 'Discoglossus_pictus', 'Eleutherodactylus_cuneatus', 'Gallus_gallus', 'Gastrophryne_carolinensis', 'Grandisonia_alternans', 'Heterodon_platyrhinos', 'Homo_sapiens', 'Hyla_cinerea', 'Hypogeophis_rostratus', 'Ichthyophis_bannanicus', 'Latimeria_chalumnae', 'Mus_musculus', 'Nesomantis_thomasseti', 'Oryctolagus_cuniculus', 'Plethodon_yonhalossee', 'Rattus_norvegicus', 'Scaphiopus_holbrooki', 'Sceloporus_undulatus', 'Siren_intermedia', 'Trachemys_scripta', 'Turdus_migratorius', 'Typhlonectes_natans', 'Xenopus_laevis']
+# 其中包含了不同的生物物种名。这些名称似乎都是学名，其中第一个部分是属名，第二部分是种名。
+
+# rootsplit_supp_dict, len 353, OrderedDict, [('011111111111111111111111111', 4398.0), ('011111111111111111111110111', 3635.0), ('000000000000000000000001000', 4398.0),
+# subsplit_supp_dict, len 4589, OrderedDict, [('011111111111111111111111111', 4398.0), ('011111111111111111111110111', 3635.0), ('000000000000000000000001000', 4398.0),
+# data, len 27, data[0] len 1949, data[1] len 1949, 
+# emp_tree_freq none
+# feature_dim 2
+# args.psp False
+# args.hL 2 num_layers
+# branch_model, args.brlen_model, gnn
+# gnn_type=args.gnn_type gcn
+
 model = VBPI(taxa, rootsplit_supp_dict, subsplit_supp_dict, data, pden=np.ones(4)/4., subModel=('JC', 1.0),
-                 emp_tree_freq=emp_tree_freq, feature_dim=args.nf, psp=args.psp, hidden_dim=args.hdim, num_layers=args.hL, branch_model=args.brlen_model, gnn_type=args.gnn_type, aggr=args.aggr, project=args.proj)
+                 emp_tree_freq=emp_tree_freq, feature_dim=args.nf, psp=args.psp, 
+                 hidden_dim=args.hdim, num_layers=args.hL, branch_model=args.brlen_model, 
+                 gnn_type=args.gnn_type, aggr=args.aggr, project=args.proj
+                 )
 
 print('Parameter Info:')
 for param in model.parameters():
@@ -108,8 +126,19 @@ for param in model.parameters():
     
 if not args.test:
     print('\nVBPI running, results will be saved to: {}\n'.format(args.save_to_path))
-    test_lb, test_kl_div = model.learn({'tree':args.stepszTree,'branch':args.stepszBranch}, args.maxIter, test_freq=args.tf, n_particles=args.nParticle, anneal_freq=args.af, init_inverse_temp=args.invT0,
-                 warm_start_interval=args.nwarmStart, method=args.gradMethod, save_to_path=args.save_to_path)
+    # {'tree': 0.001, 'branch': 0.001}
+    # af=20000, aggr='sum', ar=0.75, brlen_model='gnn', dataset='DS1', datetime='2022-01-01', empFreq=False, gnn_type='gcn', gradMethod='vimco', hL=2, hdim=100, invT0=0.001, lbf=5000, maxIter=200000, nParticle=10, nf=2, nwarmStart=100000, proj=False, psp=False, result_folder='results/DS1/gnn', save_to_path='results/DS1/gnn/ufboot_vimco_10_gcn_sum_2023-08-21 20:43:39.298451.pt', stepszBranch=0.001, stepszTree=0.001, supportType='ufboot', test=False, tf=1000
+    test_lb, test_kl_div = model.learn(
+        {'tree':args.stepszTree,'branch':args.stepszBranch}, 
+        args.maxIter, # 200000
+        test_freq=args.tf, # 1000
+        n_particles=args.nParticle, # nParticle=10
+        anneal_freq=args.af, #af=20000
+        init_inverse_temp=args.invT0, # invT0=0.001
+        warm_start_interval=args.nwarmStart, # nwarmStart=100000
+        method=args.gradMethod, # gradMethod='vimco'
+        save_to_path=args.save_to_path # save_to_path='results/DS1/gnn/ufboot_vimco_10_gcn_sum_2023-08-21 20:43:39.298451.pt'
+        )
              
     np.save(args.save_to_path.replace('.pt', '_test_lb.npy'), test_lb)
     if args.empFreq:
