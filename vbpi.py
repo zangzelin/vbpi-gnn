@@ -20,7 +20,20 @@ class VBPI(nn.Module):
     def __init__(self, taxa, rootsplit_supp_dict, subsplit_supp_dict, data, pden, subModel, emp_tree_freq=None,
                  scale=0.1, psp=True, feature_dim=2, hidden_dim=100, num_layers=1, branch_model='base', gnn_type='gcn', aggr='sum', project=False):
         super().__init__()
-        import pdb; pdb.set_trace()
+        # self.taxa  物种名称
+        # rootsplit_supp_dict, 根结点 len 353, OrderedDict, [('011111111111111111111111111', 4398.0), ('011111111111111111111110111', 3635.0), ('000000000000000000000001000', 4398.0),
+        # subsplit_supp_dict, 所有节点 len 4589, OrderedDict, [('011111111111111111111111111', 4398.0), ('011111111111111111111110111', 3635.0), ('000000000000000000000001000', 4398.0),
+        # data, 数据 len 27, data[0] len 1949, data[1] len 1949, 
+        # pden array([0.25, 0.25, 0.25, 0.25])
+        # subModel ('JC', 1.0)
+        # emp_tree_freq none
+        # feature_dim 2
+        # args.psp False
+        # args.hL 2 num_layers
+        # branch_model, args.brlen_model, gnn
+        # gnn_type=args.gnn_type gcn
+
+        # import pdb; pdb.set_trace()
         self.taxa, self.emp_tree_freq = taxa, emp_tree_freq
         if emp_tree_freq:
             self.trees, self.emp_freqs = zip(*emp_tree_freq.items())
@@ -136,7 +149,7 @@ class VBPI(nn.Module):
               init_inverse_temp=0.001, warm_start_interval=50000, method='vimco', save_to_path=None):
         lbs, lls = [], []
         test_kl_div, test_lb = [], []
-        
+        import pdb; pdb.set_trace()
         if not isinstance(stepsz, dict):
             stepsz = {'tree': stepsz, 'branch': stepsz}
         

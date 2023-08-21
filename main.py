@@ -98,7 +98,7 @@ else:
 
 rootsplit_supp_dict, subsplit_supp_dict = get_support_from_mcmc(taxa, tree_dict_support, tree_names_support)
 del tree_dict_support, tree_names_support
-import pdb; pdb.set_trace()
+# import pdb; pdb.set_trace()
 
 
 # taxa = ['Alligator_mississippiensis', 'Ambystoma_mexicanum', 'Amphiuma_tridactylum', 'Bufo_valliceps', 'Discoglossus_pictus', 'Eleutherodactylus_cuneatus', 'Gallus_gallus', 'Gastrophryne_carolinensis', 'Grandisonia_alternans', 'Heterodon_platyrhinos', 'Homo_sapiens', 'Hyla_cinerea', 'Hypogeophis_rostratus', 'Ichthyophis_bannanicus', 'Latimeria_chalumnae', 'Mus_musculus', 'Nesomantis_thomasseti', 'Oryctolagus_cuniculus', 'Plethodon_yonhalossee', 'Rattus_norvegicus', 'Scaphiopus_holbrooki', 'Sceloporus_undulatus', 'Siren_intermedia', 'Trachemys_scripta', 'Turdus_migratorius', 'Typhlonectes_natans', 'Xenopus_laevis']
