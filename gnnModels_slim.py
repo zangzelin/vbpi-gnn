@@ -146,7 +146,6 @@ class GatedGraphConv(nn.Module):
             m = neigh_feature.sum(1)
             
             x = self.rnn(m, x)
-        
         return x
         
         
@@ -155,8 +154,7 @@ class GNNStack(nn.Module):
     gnnModels = {'gcn': GCNConv,
                  'sage': SAGEConv,
                  'gin': GINConv,
-                 'edge': EdgeConv,
-             }
+                 'edge': EdgeConv,}
     def __init__(self, in_channels, out_channels, num_layers=1, bias=True, aggr='sum', gnn_type='gcn', project=False, **kwargs):
         super().__init__()
         self.in_channels, self.out_channels = in_channels, out_channels
@@ -174,8 +172,7 @@ class GNNStack(nn.Module):
             x = F.elu(x)
         
         return x
-        
-        
+    
 
 class MeanStdPooling(nn.Module):
     def __init__(self, in_channels, out_channels, bias=True, **kwargs):

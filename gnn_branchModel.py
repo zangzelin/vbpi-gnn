@@ -68,8 +68,9 @@ class GNNModel(nn.Module):
     
     
     def mean_std(self, tree, **kwargs):
+        # node_features : [n_nodes, feature_dim] node 前面是onehot，后面是传播的到的表征
+        # edge_index : 父节点， 子节点1， 子节点2
         node_features, edge_index = self.node_embedding(tree)
-        import pdb; pdb.set_trace()
         node_features = self.gnn(node_features, edge_index)
 
         return self.mean_std_net(node_features, edge_index[:-1, 0])
@@ -82,6 +83,7 @@ class GNNModel(nn.Module):
     
     def forward(self, tree_list):
         mean, std = zip(*map(lambda x: self.mean_std(x), tree_list))
+        import pdb; pdb.set_trace()
         mean, std = torch.stack(mean, dim=0), torch.stack(std, dim=0)
         samp_log_branch, logq_branch = self.sample_branch_base(len(tree_list))
         samp_log_branch, logq_branch = samp_log_branch * std.exp() + mean - 2.0, logq_branch - torch.sum(std, -1)
