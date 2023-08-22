@@ -82,9 +82,13 @@ class GNNModel(nn.Module):
     
     
     def forward(self, tree_list):
+        # use gnn to predict the mean and std
         mean, std = zip(*map(lambda x: self.mean_std(x), tree_list))
-        import pdb; pdb.set_trace()
+        # stack the mean and std of each tree
         mean, std = torch.stack(mean, dim=0), torch.stack(std, dim=0)
+        import pdb; pdb.set_trace()
+        # samp_log_branch is random sample from N(0, 1)
+        # logq_branch is the log density of the sample
         samp_log_branch, logq_branch = self.sample_branch_base(len(tree_list))
         samp_log_branch, logq_branch = samp_log_branch * std.exp() + mean - 2.0, logq_branch - torch.sum(std, -1)
         return samp_log_branch, logq_branch 

@@ -35,6 +35,7 @@ class PHY(object):
         self.scale= scale
     
     def initialCLV(self, data, unique_site=False):
+        import pdb; pdb.set_trace()
         if unique_site:
             data_arr = np.array(list(zip(*data)))
             unique_sites, counts = np.unique(data_arr, return_counts=True, axis=0)
