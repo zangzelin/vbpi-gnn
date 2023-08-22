@@ -167,7 +167,6 @@ class SBN(nn.Module):
     def sample_tree(self, rooted=False):
         root = Tree()
         node_split_stack = [(root, '0'*self.ntaxa + '1'*self.ntaxa)]
-        import pdb; pdb.set_trace()
         for i in range(self.ntaxa-1):
             node, split_bitarr = node_split_stack.pop()
             parent_clade_bitarr = bitarray(split_bitarr[self.ntaxa:])
@@ -201,7 +200,6 @@ class SBN(nn.Module):
         
         if not rooted:
             root.unroot()
-        import pdb; pdb.set_trace()
         
         return root        
         

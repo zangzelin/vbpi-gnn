@@ -107,9 +107,68 @@ class VBPI(nn.Module):
 
         return lower_bound.item()
     
+# (Pdb) print(root)
+
+#          /-Hypogeophis_rostratus
+#       /-|
+#      |   \-Grandisonia_alternans
+#      |
+#      |      /-Scaphiopus_holbrooki
+#    /-|   /-|
+#   |  |  |   \-Plethodon_yonhalossee
+#   |  |  |
+#   |  |  |      /-Typhlonectes_natans
+#   |  |  |   /-|
+#   |   \-|  |  |   /-Siren_intermedia
+#   |     |  |   \-|
+#   |     |  |      \-Ambystoma_mexicanum
+#   |     |  |
+#   |     |  |      /-Discoglossus_pictus
+#   |      \-|     |
+#   |        |   /-|      /-Nesomantis_thomasseti
+#   |        |  |  |   /-|
+#   |        |  |   \-|   \-Eleutherodactylus_cuneatus
+#   |        |  |     |
+#   |        |  |      \-Bufo_valliceps
+#   |         \-|
+#   |           |      /-Hyla_cinerea
+#   |           |   /-|
+#   |           |  |   \-Gastrophryne_carolinensis
+#   |           |  |
+#   |            \-|   /-Xenopus_laevis
+#   |              |  |
+# --|              |  |   /-Latimeria_chalumnae
+#   |              |  |  |
+#   |               \-|  |      /-Trachemys_scripta
+#   |                 |  |     |
+#   |                 |  |     |         /-Oryctolagus_cuniculus
+#   |                 |  |     |      /-|
+#   |                  \-|   /-|     |  |   /-Rattus_norvegicus
+#   |                    |  |  |   /-|   \-|
+#   |                    |  |  |  |  |      \-Mus_musculus
+#   |                    |  |  |  |  |
+#   |                    |  |   \-|   \-Homo_sapiens
+#   |                    |  |     |
+#   |                     \-|     |   /-Turdus_migratorius
+#   |                       |      \-|
+#   |                       |         \-Gallus_gallus
+#   |                       |
+#   |                       |      /-Sceloporus_undulatus
+#   |                       |   /-|
+#   |                        \-|   \-Heterodon_platyrhinos
+#   |                          |
+#   |                           \-Alligator_mississippiensis
+#   |
+#   |--Ichthyophis_bannanicus
+#   |
+#    \-Amphiuma_tridactylum
+
+
+
     def vimco_lower_bound(self, inverse_temp=1.0, n_particles=10):
         samp_trees = [self.tree_model.sample_tree() for particle in range(n_particles)]
         [namenum(tree, self.taxa) for tree in samp_trees]
+        import pdb; pdb.set_trace()
         
         samp_log_branch, logq_branch = self.branch_model(samp_trees)
         
