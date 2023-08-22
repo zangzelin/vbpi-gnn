@@ -201,6 +201,7 @@ class SBN(nn.Module):
         
         if not rooted:
             root.unroot()
+        import pdb; pdb.set_trace()
         
         return root        
         
