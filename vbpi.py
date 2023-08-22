@@ -108,6 +108,7 @@ class VBPI(nn.Module):
         return lower_bound.item()
     
     def vimco_lower_bound(self, inverse_temp=1.0, n_particles=10):
+        import pdb; pdb.set_trace()
         samp_trees = [self.tree_model.sample_tree() for particle in range(n_particles)]
         [namenum(tree, self.taxa) for tree in samp_trees]
         
