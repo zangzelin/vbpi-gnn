@@ -69,6 +69,7 @@ class GNNModel(nn.Module):
     
     def mean_std(self, tree, **kwargs):
         node_features, edge_index = self.node_embedding(tree)
+        import pdb; pdb.set_trace()
         node_features = self.gnn(node_features, edge_index)
 
         return self.mean_std_net(node_features, edge_index[:-1, 0])

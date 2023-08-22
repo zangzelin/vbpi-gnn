@@ -162,15 +162,13 @@ class VBPI(nn.Module):
 #   |--Ichthyophis_bannanicus
 #   |
 #    \-Amphiuma_tridactylum
-
-
-
     def vimco_lower_bound(self, inverse_temp=1.0, n_particles=10):
+        # Randomly sampling out some tree structures
         samp_trees = [self.tree_model.sample_tree() for particle in range(n_particles)]
         [namenum(tree, self.taxa) for tree in samp_trees]
-        import pdb; pdb.set_trace()
         
         samp_log_branch, logq_branch = self.branch_model(samp_trees)
+        # import pdb; pdb.set_trace()
         
         logll = torch.stack([self.phylo_model.loglikelihood(log_branch, tree) for log_branch, tree in zip(*[samp_log_branch, samp_trees])])
         logp_prior = self.phylo_model.logprior(samp_log_branch)
